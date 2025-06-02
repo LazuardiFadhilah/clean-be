@@ -7,6 +7,6 @@ app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
-// app.use('/api/billings', require('./routes/billingRoutes'));
+app.use('/api/billings', require('./routes/billingRoutes'));
 
 module.exports = app;
