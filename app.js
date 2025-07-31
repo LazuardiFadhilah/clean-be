@@ -6,10 +6,12 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:3001', 'https://clean-fe.vercel.app/'],
+    origin: ['http://localhost:3001', 'https://clean-fe.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
+
+app.options('*', cors()); // Enable pre-flight requests for all routes
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
