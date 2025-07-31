@@ -10,7 +10,7 @@ const corsOptions = {
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-
+app.options('*', cors(corsOptions)); // Pre-flight request for all routes
 app.use(cors(corsOptions));
 
 app.use(express.json());
