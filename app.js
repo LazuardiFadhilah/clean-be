@@ -6,17 +6,19 @@ const app = express();
 
 console.log("CORS_ORIGIN dari variabel lingkungan:", process.env.CORS_ORIGIN);
 
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3001",
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "http://localhost:3001",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+
+app.use(
+  cors(corsOptions)
 );
 
-app.options("*", cors());
+app.options("*",cors(corsOptions)); // Enable preflight requests for all routes
 
 app.use(express.json());
 
