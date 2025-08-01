@@ -6,12 +6,12 @@ const app = express();
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || 'http://localhost:3001', // Default to localhost if not set
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-app.options('*', cors(corsOptions)); // Pre-flight request for all routes
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Pre-flight request for all routes
 
 app.use(express.json());
 
