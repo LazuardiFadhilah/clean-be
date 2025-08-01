@@ -6,8 +6,12 @@ const app = express();
 
 console.log('CORS_ORIGIN dari variabel lingkungan:', process.env.CORS_ORIGIN);
 
+const corsWhitelist = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
+  : ['http://localhost:3001'];
+
 app.use(cors({
-    origin:[process.env.CORS_ORIGIN , 'http://localhost:3001'], // Ganti dengan URL frontend kamu
+    origin: corsWhitelist,
   credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
