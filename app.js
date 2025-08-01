@@ -4,6 +4,9 @@ require('dotenv').config();
 
 const app = express();
 
+console.log('CORS_ORIGIN dari variabel lingkungan:', process.env.CORS_ORIGIN);
+
+
 const whitelist = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:3001'];
 
 const corsOptions = {
