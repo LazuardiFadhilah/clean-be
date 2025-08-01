@@ -6,26 +6,14 @@ const app = express();
 
 console.log('CORS_ORIGIN dari variabel lingkungan:', process.env.CORS_ORIGIN);
 
-
-const whitelist = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:3001'];
-
-const corsOptions = {
- origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
- },
+app.use(cors({
+    origin:process.env.CORS_ORIGIN || 'http://localhost:3001', // Ganti dengan URL frontend kamu
   credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-}
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions)); // Pre-flight requests for all routes
+}))
 
 app.use(express.json());
-
 
 
 app.use('/api/auth', require('./routes/authRoutes'));
