@@ -6,12 +6,20 @@ const app = express();
 
 console.log('CORS_ORIGIN dari variabel lingkungan:', process.env.CORS_ORIGIN);
 
-const corsWhitelist = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
-  : ['http://localhost:3001'];
+const allowedOrigins = [
+    process.env.CORS_ORIGIN ,
+    'http://localhost:3001',
+];
 
 app.use(cors({
-    origin: corsWhitelist,
+    origin: function (origin, callback){
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error('CORS policy: Origin not allowed'), false);
+        }
+    },
   credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
