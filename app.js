@@ -4,10 +4,22 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({
-    origin: 'https://clean-fe.vercel.app', 
+const whitelist = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['http://localhost:3001'];
+
+const corsOptions = {
+ origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+ },
+  credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-}))
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}
+app.use(cors(corsOptions))
+app.options('*', cors()); // Pre-flight requests for all routes
 
 app.use(express.json());
 
